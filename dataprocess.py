@@ -39,7 +39,6 @@ def train_test_split(X, y, test_size=0.2, shuffle=False):
 class PolyFeatures:
     def checkback(self, vals, degree):
         vals = vals.tolist()
-        print(vals)
         for i in range(len(vals)):
             sno = degree-vals[i]
             for j in range(i+1, len(vals)):
@@ -97,4 +96,24 @@ class Binarizer:
             else:
                 binarized.append(0)
 
-        return np.array(binarized).reshape(-1, 1)
+        return np.array(binarized).reshape(X.shape, order='F')
+
+class LabelBinarizer:
+    def __init__(self, neg_label=0, pos_label=1):
+        self.neg_label = neg_label
+        self.pos_label = pos_label
+
+    def fit(self, X):
+        self.classes_ = np.array(list(set(X.ravel())))
+    
+    def fit_transform(self, X):
+        self.fit(X)
+        print(X.shape)
+        print(self.classes_)
+        template = np.empty((0, len(self.classes_)))
+
+        for i in np.nditer(X):
+            gen_arr = np.full((len(self.classes_)), self.neg_label)
+            template = np.row_stack((template, gen_arr))
+        
+        print(template)
