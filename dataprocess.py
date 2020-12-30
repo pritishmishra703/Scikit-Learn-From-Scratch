@@ -89,6 +89,10 @@ class Binarizer:
         self.threshold = threshold
     
     def transform(self, X):
+
+        if type(X) is list:
+            X = np.array(X).reshape(-1, 1)
+
         binarized = []
         for i in np.nditer(X):
             if i > self.threshold:
@@ -103,17 +107,38 @@ class LabelBinarizer:
         self.neg_label = neg_label
         self.pos_label = pos_label
 
+        if self.neg_label >= self.pos_label:
+            raise ValueError(f"neg_label={self.neg_label} must be strictly less than pos_label={self.pos_label}")
+
     def fit(self, X):
         self.classes_ = np.array(list(set(X.ravel())))
-    
-    def fit_transform(self, X):
-        self.fit(X)
-        print(X.shape)
-        print(self.classes_)
-        template = np.empty((0, len(self.classes_)))
+
+    def transform(self, X):
+        template = np.empty((0, len(self.classes_)), dtype=int)
 
         for i in np.nditer(X):
             gen_arr = np.full((len(self.classes_)), self.neg_label)
+            gen_arr[np.where(self.classes_ == i)[0][0]] = self.pos_label
             template = np.row_stack((template, gen_arr))
-        
-        print(template)
+
+        return template 
+    
+    def fit_transform(self, X):
+        self.fit(X)
+        template = self.transform(X)
+        return template
+
+class MaxAbsScaler:
+    def fit(self, X):
+        absX = abs(X)
+        self.max_value = np.amax(absX, axis=0).astype(float)
+
+    def transform(self, X):
+        return X/self.max_value
+    
+    def fit_transform(self, X):
+        self.fit(X)
+        return self.transform(X)
+    
+    def inverse_transform(self, X):
+        return X*self.max_value
