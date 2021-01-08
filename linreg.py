@@ -13,8 +13,3 @@ class LinearRegression:
     def predict(self, X: list):
         self.predicted = np.dot(X, self.slope) + self.intercept
         return self.predicted
-
-    def save_model(self, model):
-        import pickle
-        saved_model = pickle.dump(model, "model")
-        print(saved_model)

@@ -1,13 +1,16 @@
 import numpy as np
 
 class LabelEncoder:
-    def fit_transform(self, x):
-        X_set = set(x)
+    def fit(self, X):
+        X_set = set(X)
         self.classes_ = list(X_set)
         self.classes_.sort()
+
+    def fit_transform(self, X):
+        self.fit(X)
         X_mod = []
 
-        for i in x:
+        for i in X:
             X_mod.append(self.classes_.index(i))
 
         X_mod = np.array(X_mod)
@@ -142,3 +145,24 @@ class MaxAbsScaler:
     
     def inverse_transform(self, X):
         return X*self.max_value
+
+class MinMaxScaler:
+    def __init__(self, feature_range=(0, 1)) -> None:
+        self.feature_range = feature_range
+    
+    def fit(self, X):
+        self.data_min_ = np.min(X, axis=0).astype(float)
+        self.data_max_ = np.max(X, axis=0).astype(float)
+        self.data_range_ = self.data_max_ - self.data_min_
+    
+    def transform(self, X):
+        fr_min = self.feature_range[0]
+        fr_max = self.feature_range[1]
+        self.scale_ = (fr_max - fr_min)/(self.data_max_ - self.data_min_)
+        self.min_ = fr_min - self.data_min_*self.scale_
+        return ((X - self.data_min_)/(self.data_max_ - self.data_min_)) * (fr_max - fr_min) + fr_min
+
+    def fit_transform(self, X):
+        self.fit(X)
+        return self.transform(X)
+
