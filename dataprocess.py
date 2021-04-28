@@ -28,8 +28,9 @@ class LabelEncoder:
 class onehotencoder():
     pass
 
-def train_test_split(X, y, test_size=0.2, shuffle=False):
+def train_test_split(X, y, test_size=0.2, shuffle=False, seed=None):
     if shuffle:
+        np.random.seed(seed)
         np.random.shuffle(X)
         np.random.shuffle(y)
 
