@@ -1,4 +1,5 @@
 import numpy as np
+from itertools import combinations_with_replacement
 
 class LabelEncoder:
     def fit(self, X):
@@ -39,27 +40,23 @@ def train_test_split(X, y, test_size=0.2, shuffle=False):
     return X_train, X_test, y_train, y_test
 
 
-class PolyFeatures:
-    def checkback(self, vals, degree):
-        vals = vals.tolist()
-        for i in range(len(vals)):
-            sno = degree-vals[i]
-            for j in range(i+1, len(vals)):
-                if vals[j] == sno:
-                    print(vals.index(vals[i]), vals.index(vals[j]))
+def polynomial_features(X, degree):
+    n_samples, n_features = np.shape(X)
 
-    def transform(self, X, degree):
-        X_copy = X
-        self.degree_list = np.ones(X.shape[1])
-        print(X.shape[1])
+    def index_combinations():
+        combs = [combinations_with_replacement(range(n_features), i) for i in range(0, degree + 1)]
+        flat_combs = [item for sublist in combs for item in sublist]
+        return flat_combs
+    
+    combinations = index_combinations()
+    n_output_features = len(combinations)
+    X_new = np.empty((n_samples, n_output_features))
+    
+    for i, index_combs in enumerate(combinations):  
+        X_new[:, i] = np.prod(X[:, index_combs], axis=1)
 
-        for i in range(2, degree+1):
-            X_copy = np.concatenate((np.array(X_copy), np.array(np.power(X, i))), axis=1)
-            self.degree_list = np.append(self.degree_list, i)
-            self.checkback(self.degree_list, degree)
+    return X_new
 
-        
-        return X_copy
 
 class StandardScaler:
     def __init__(self, with_mean=True, with_std=True):
