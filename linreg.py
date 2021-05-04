@@ -1,5 +1,4 @@
 import numpy as np
-from numpy.core.defchararray import center
 
 class LinearRegression:
     def fit(self, X, y):
@@ -25,8 +24,8 @@ class RidgeRegression() :
         self.get_log = get_log
 
     def fit(self, X, y) :
-        self.W = np.zeros(X.shape[1])
-        self.b = 0
+        self.W = np.random.randn(X.shape[1])
+        self.b = 3
 
         if self.get_log == True:
             self.y_pred_log = []
@@ -124,7 +123,7 @@ class ElasticNet() :
 
         for i in range(self.max_iter):
             y_pred = self.predict(X)
-            LW = (-(2*(X.T).dot(y - y_pred)) + (self.alpha*self.l1_ratio) + (2*self.alpha*((1 - self.l1_ratio)*0.5)*self.W))/X.shape[0]
+            LW = (-(2*(X.T).dot(y - y_pred)) + (self.alpha*self.l1_ratio) + (self.alpha*(1 - self.l1_ratio)*self.W))/X.shape[0]
             Lb = -2*np.sum(y - y_pred )/X.shape[0]
             
             self.W -= self.learning_rate*LW
