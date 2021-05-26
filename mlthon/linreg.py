@@ -49,7 +49,7 @@ class RidgeRegression() :
         return np.dot(X, self.W) + self.b
 
 
-class GradientDescent() :
+class BatchGradientDescent() :
 
     def __init__(self, learning_rate=0.001, max_iter=1000, get_log=False):
         self.learning_rate = learning_rate
@@ -151,13 +151,14 @@ class LogisticRegression:
         self.learning_rate = learning_rate
 
     def fit(self, X, y):
-        n_features = X.shape[1]
-        limit = 1/np.sqrt(n_features)
-        self.W = np.random.uniform(-limit, limit, (n_features,))
+        ones = np.ones(len(X)).reshape(-1, 1)
+        X = np.concatenate((ones, X), axis=1)
+        
+        self.W = np.zeros(X.shape[1])
 
         for i in range(self.max_iter):
-            y_pred  = self.predict(X)
-            Lw = -(y - y_pred).dot(X)
+            y_pred = self.predict(X)
+            Lw = np.dot(X.T, y_pred - y)
 
             self.W -= self.learning_rate * Lw
 
