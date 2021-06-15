@@ -15,7 +15,7 @@ class LinearRegression:
         return self.predicted
 
 
-class RidgeRegression() :
+class RidgeRegression:
 
     def __init__(self,  alpha=1.0, learning_rate=0.005, max_iter=1000, get_log=False):
         self.learning_rate = learning_rate
@@ -49,7 +49,7 @@ class RidgeRegression() :
         return np.dot(X, self.W) + self.b
 
 
-class BatchGradientDescent() :
+class BatchGradientDescent:
 
     def __init__(self, learning_rate=0.001, max_iter=1000, get_log=False):
         self.learning_rate = learning_rate
@@ -78,7 +78,7 @@ class BatchGradientDescent() :
         return np.dot(X, self.W) + self.b
 
 
-class LassoRegression() :
+class LassoRegression:
 
     def __init__(self,  alpha=1.0, learning_rate=0.005, max_iter=1000, get_log=False):
         self.learning_rate = learning_rate
@@ -108,7 +108,7 @@ class LassoRegression() :
         return np.dot(X, self.W) + self.b
 
 
-class ElasticNet() :
+class ElasticNet:
 
     def __init__(self,  alpha=1.0, l1_ratio=0.5, learning_rate=0.005, max_iter=1000, get_log=False):
         self.learning_rate = learning_rate
