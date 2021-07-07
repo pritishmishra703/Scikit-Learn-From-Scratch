@@ -42,26 +42,3 @@ class KNNClassifier:
 
         predictions = np.array(predictions)
         return predictions
-
-
-class KNNRegressor:
-
-    def __init__(self, n_neighbours=5, p=2):
-        self.n_neighbours = n_neighbours
-        self.p = p
-
-
-    def fit(self, X, y):
-        _check_data_validity(data=[X, y], names=['X', 'y'])
-        _dim_check(data=X, dim=2, name='X')
-        _dim_check(data=y, dim=1, name='y')
-
-        self.X = X
-        self.y = y
-        return self
-
-
-    def predict(self, X):
-        _dim_check(X, 2, 'X')
-
-  

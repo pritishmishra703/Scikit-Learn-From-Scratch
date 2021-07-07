@@ -153,15 +153,12 @@ class LogisticRegression:
 
     def fit(self, X, y):
         self.weights = np.random.rand(X.shape[1])
-        self.bias = 0
         self.m = len(X)
 
         for i in range(self.max_iter):
             y_pred = self.predict(X)
             Lw = np.dot(X.T, (y_pred - y)) / self.m
-            Lb = np.sum(y_pred - y) / self.m
             self.weights = self.weights - self.learning_rate * Lw
-            # self.bias = self.bias - self.learning_rate * Lb
 
             if self.print_info == True:
                 if (i + 1)%100 == 0:
