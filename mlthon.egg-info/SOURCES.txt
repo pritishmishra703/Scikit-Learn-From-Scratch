@@ -1,7 +1,0 @@
-README.md
-setup.py
-mlthon.egg-info/PKG-INFO
-mlthon.egg-info/SOURCES.txt
-mlthon.egg-info/dependency_links.txt
-mlthon.egg-info/requires.txt
-mlthon.egg-info/top_level.txt
