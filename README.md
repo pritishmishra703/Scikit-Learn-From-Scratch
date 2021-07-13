@@ -9,13 +9,11 @@ You can learn what is happening Under The Hood of all these Algorithms (or Mathe
 ## Installation
 
 ```
-$ git clone https://github.com/pritishmishra703/MLthon.git
-$ cd MLthon
-$ python setup.py install
+pip install mlthon
 ```
 
-## Folder Structure
+## How to use?
 
-You will get all Linear Algorithms in `linreg.py`, all Data Preprocessing algorithms in `dataprocess.py`.
+Documentation of this package is not yet available. We will be making an Official Documentation of this Package in near future when this package is fully created! Till then explore on your own.
 
 Note: This Repository is under construction and new Algorithms will be added soon. You can too contribute!
