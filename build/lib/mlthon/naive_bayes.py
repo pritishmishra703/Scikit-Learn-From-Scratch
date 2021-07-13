@@ -1,5 +1,5 @@
 import numpy as np
-from mlthon.mlthon.backend import _dim_check
+from mlthon.backend import _dim_check
 
 
 class GaussianNB:
