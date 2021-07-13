@@ -33,6 +33,7 @@ class RidgeRegression:
 
         for i in range(self.max_iter):
             y_pred = self.predict(X)
+            
             LW = (-(2*(X.T).dot(y - y_pred)) + (2*self.alpha*self.W))/X.shape[0]
             Lb = -2*np.sum(y - y_pred)/X.shape[0]
             
@@ -62,6 +63,7 @@ class BatchGradientDescent:
 
         for i in range(self.max_iter):
             y_pred = self.predict(X)
+            
             LW = -(2*(X.T).dot(y - y_pred))/X.shape[0]
             Lb = -2*np.sum(y - y_pred)/X.shape[0]
             
@@ -74,7 +76,7 @@ class BatchGradientDescent:
                 self.loss_log.append(np.mean(np.square(y - y_pred)))
 
       
-    def predict(self, X) :    
+    def predict(self, X) :
         return np.dot(X, self.W) + self.b
 
 
@@ -129,10 +131,9 @@ class ElasticNet:
             self.W -= self.learning_rate*LW
             self.b -= self.learning_rate*Lb
 
-            if self.get_log == True:
-                if i%10 == 0:
+            if self.get_log == True and (i + 1) % 10 == 0:
                     self.y_pred_log.append(y_pred)
-                self.loss_log.append(np.mean(np.square(y - y_pred)))
+                    self.loss_log.append(np.mean(np.square(y - y_pred)))
 
       
     def predict(self, X) :    
@@ -160,17 +161,15 @@ class LogisticRegression:
             Lw = np.dot(X.T, (y_pred - y)) / self.m
             self.weights = self.weights - self.learning_rate * Lw
 
-            if self.print_info == True:
-                if (i + 1)%100 == 0:
-                    loss = self.BinaryCrossEntropy(y, y_pred)
-                    print(f"Iteration: {i+1}, Loss: {loss}")
+            if self.print_info == True and (i + 1) % 100 == 0:
+                loss = self.BinaryCrossEntropy(y, y_pred)
+                print(f"Iteration: {i+1}, Loss: {loss}")
 
     def BinaryCrossEntropy(self, y_true, y_pred):
         y_pred = np.clip(y_pred, 1e-7, 1 - 1e-7)
         term_0 = (1 - y_true) * sum(np.log(1 - y_pred + 1e-7))
         term_1 = y_true * sum(np.log(y_pred + 1e-7))
-        loss = -1.0/self.m * np.mean(term_0+term_1, axis=0)
-        return loss
+        return -1.0/self.m * np.mean(term_0+term_1, axis=0)
     
     def predict(self, X):
         predictions = self.sigmoid(np.dot(X, self.weights)).astype('float32')
