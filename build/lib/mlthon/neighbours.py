@@ -1,5 +1,5 @@
 import numpy as np
-from mlthon.mlthon.backend import _check_data_validity, _dim_check
+from mlthon.mlthon.backend import check_data_validity, _dim_check
 
 class KNNClassifier:
 
@@ -9,7 +9,7 @@ class KNNClassifier:
 
 
     def fit(self, X, y):
-        _check_data_validity(data=[X, y], names=['X', 'y'])
+        check_data_validity(data=[X, y], names=['X', 'y'])
         _dim_check(data=X, dim=2, name='X')
         _dim_check(data=y, dim=1, name='y')
 

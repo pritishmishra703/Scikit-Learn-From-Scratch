@@ -1,7 +1,7 @@
 import numpy as np
 import warnings
 
-def _check_data_validity(data, names):
+def check_data_validity(data, names):
     '''
     Checks if data is valid for training (or any other operation).
 
@@ -15,9 +15,9 @@ def _check_data_validity(data, names):
 
     Example
     -------
-    >>> from mlthon.backend import _check_data_validity
+    >>> from mlthon.backend import check_data_validity
     >>> X, y = np.array([1., 2., 3.]), np.array([2., 3., 4.])
-    >>> _check_data_validity(data=[X, y], names=['X', 'y'])
+    >>> check_data_validity(data=[X, y], names=['X', 'y'])
     '''
     
     for datum, name in zip(data, names):

@@ -154,12 +154,16 @@ class LogisticRegression:
 
     def fit(self, X, y):
         self.weights = np.random.rand(X.shape[1])
+        self.bias = 0
         self.m = len(X)
 
         for i in range(self.max_iter):
             y_pred = self.predict(X)
             Lw = np.dot(X.T, (y_pred - y)) / self.m
+            Lb = np.sum(y_pred - y) / self.m
+
             self.weights = self.weights - self.learning_rate * Lw
+            self.bias = self.bias - self.learning_rate * Lb
 
             if self.print_info == True and (i + 1) % 100 == 0:
                 loss = self.BinaryCrossEntropy(y, y_pred)
@@ -172,7 +176,7 @@ class LogisticRegression:
         return -1.0/self.m * np.mean(term_0+term_1, axis=0)
     
     def predict(self, X):
-        predictions = self.sigmoid(np.dot(X, self.weights)).astype('float32')
+        predictions = self.sigmoid(np.dot(X, self.weights) + self.bias).astype('float32')
         predictions = np.where(predictions >= 0.5, 1, 0)
         return predictions
 
