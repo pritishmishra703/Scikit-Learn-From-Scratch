@@ -3,10 +3,10 @@ from mlthon.mlthon.backend import dim_check, check_data_validity
 
 
 def _checks(y_true, y_pred):
-    check_data_validity([y_true, y_pred], names=['y_true', 'y_pred'])
-    dim_check([y_true, y_pred], [1, 1], ['y_true', 'y_pred'])
     if y_true.shape != y_pred.shape:
         raise ValueError("Length of 'y_true' and 'y_pred' should be same.")
+    check_data_validity([y_true, y_pred], names=['y_true', 'y_pred'])
+    dim_check([y_true, y_pred], [1, 1], ['y_true', 'y_pred'])
 
 
 def accuracy_score(y_true, y_pred):

@@ -142,15 +142,9 @@ class ElasticNet:
 
 class LogisticRegression:
 
-    def __init__(self, penalty='l2', learning_rate=0.0001, C=1.0, fit_intercept=True, max_iter=5000, 
-    l1_ratio=None, print_info=False):
-        self.penalty = penalty
-        self.C = C
-        self.fit_intercept = fit_intercept
-        self.max_iter = max_iter
-        self.l1_ratio = l1_ratio
+    def __init__(self, learning_rate=0.0001, n_iter=5000):
+        self.n_iter = n_iter
         self.learning_rate = learning_rate
-        self.print_info = print_info
 
 
     def fit(self, X, y):
@@ -158,7 +152,7 @@ class LogisticRegression:
         self.weights = np.zeros(n)
         self.bias = 0
 
-        for _ in range(self.max_iter):
+        for _ in range(self.n_iter):
             y_pred = self.predict_proba(X)
             dw = (1/n) * np.dot(X.T, (y_pred - y))
             db = (1/n) * np.sum(y_pred - y)
