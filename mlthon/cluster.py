@@ -2,12 +2,14 @@ import numpy as np
 
 class KMeans:
 
-    def __init__(self, k=8, n_iter=100):
+    def __init__(self, k=8, n_iter=100, random_state=None):
         self.k = k
         self.n_iter = n_iter
+        self.random_state = random_state
 
 
     def fit(self, X):
+        np.random.seed(self.random_state)
         centroids_index = np.random.choice(X.shape[0], size=self.k, replace=False)
         self.centroids = X[centroids_index]
 

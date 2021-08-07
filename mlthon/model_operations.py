@@ -18,8 +18,10 @@ class save_load_model():
         return loaded_model
 
 class gpfc:
-    def get_predictions(self, api_key, data):
+    def __init__(self, api_key) -> None:
         self.api_key = api_key
+
+    def get_predictions(self, data):
         request_link = f"http://127.0.0.1:8000/api-key/?token={self.api_key}&X={data}"
         pred_request = requests.get(request_link)
         predictions = BeautifulSoup(pred_request.content, "html.parser")
