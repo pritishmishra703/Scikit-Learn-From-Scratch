@@ -11,7 +11,3 @@ You can learn what is happening Under The Hood of all these Algorithms (or Mathe
 ```
 pip install mlthon
 ```
-
-## How to use?
-
-Documentation of this package is not yet available. We will be making an Official Documentation of this Package in near future when this package is fully created! Till then explore on your own.
